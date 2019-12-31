@@ -1,0 +1,14 @@
+{
+  "name": "submit",
+  "version": "1.0.0",
+  "description": "submit point",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "080001",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}
