@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <form bindsubmit="formSubmit" class="formsection"> 
-    <input name="input" class="inputbox"  maxlength="2" type="number" auto-focus="true" placeholder="please input points" adjust-position ="true" bindfocus="setsubmit" value="{{inputValue}}"></input>
+    <input name="input" class="inputbox"  maxlength="2" type="number" auto-focus="true" placeholder="{{ph}}" adjust-position ="true" bindfocus="setsubmit" value="{{inputValue}}"></input>
     <button plain="false" form-type="submit">{{btnlable}}</button> 
   </form>
 </view>
