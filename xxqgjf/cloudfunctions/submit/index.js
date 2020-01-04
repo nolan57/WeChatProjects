@@ -6,13 +6,21 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const db=wx.cloud.database({
+  const db=cloud.database({
     env:'ssjs57'
   })
   const cl=db.collection('xxqgjf')
+  const ur=db.collection("members") 
+  const cmd=db.command
+
+  wx.showToast({
+    title: ur.where({_openid:cmd.eq(wxContext.OPENID)}).get(),
+    icon:'none',
+    duration:10000
+  })
+
   cl.add({
     data:{
-      _id: wxContext.OPENID,
       code: event.code,
       name: event.name,
       points: event.points,

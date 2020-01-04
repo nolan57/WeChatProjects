@@ -6,7 +6,8 @@ Page({
     date: '',
     ph: '',
     inputValue: '',
-    btnlable: "submit"
+    btnlable: "submit",
+    ress:""
   },
   formSubmit:function(e){
     
@@ -21,6 +22,24 @@ Page({
       })
       return
     }
+
+    wx.cloud.init({
+      env:'ssjs57'
+    })
+    const oid = wx.cloud.OPENID
+    const db=wx.cloud.database({})
+    //const cl=db.collection('xxqgjf')
+    const ur=db.collection("members") 
+    const cmd=db.command
+
+    ur.where({_openid:cmd.eq(oid)}).get().then(
+      res=>{
+        if(typeof(res.data.code)=="undefined"){
+          this.setData({btnlable:"Not a member"})
+          return
+          }
+        }
+      )
 
     console.log('form submit: ',this.data.inputValue)
     wx.cloud.callFunction({
