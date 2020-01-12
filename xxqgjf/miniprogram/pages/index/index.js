@@ -27,34 +27,45 @@ Page({
       env:'ssjs57'
     })
     const oid = wx.cloud.OPENID
-    const db=wx.cloud.database({})
-    //const cl=db.collection('xxqgjf')
+    const db=wx.cloud.database()
+    const cl=db.collection('xxqgjf')
     const ur=db.collection("members") 
     const cmd=db.command
+    let today=this.data.date.getFullYear().toString()+'/'+(this.data.date.getMonth()+1).toString()+'/'+this.data.date.getDate().toString()
 
-    ur.where({_openid:cmd.eq(oid)}).get().then(
-      res=>{
-        if(typeof(res.data.code)=="undefined"){
-          this.setData({btnlable:"Not a member"})
-          return
+    ur.get({
+      success:(res)=>{
+        let member=res.data
+        let flag=false
+        console.log(oid)
+        for(let i=0;i<member.length;i++){
+          console.log(member[i]._openid)
+          if(member[i]._openid===oid){
+            flag=true
+            break
           }
         }
-      )
-
-    console.log('form submit: ',this.data.inputValue)
-    wx.cloud.callFunction({
-      name: 'submit',
-      data:{
-        code: "080001",
-        name: "wuqiang",
-        points: this.data.inputValue,
-        when: this.data.date.getFullYear().toString()+'/'+(this.data.date.getMonth()+1).toString()+'/'+this.data.date.getDate().toString()
+        if(flag==false){
+          wx.showToast({
+            title: '尚未注册',
+            icon:'fail',
+            duration:5000
+          })
+          wx.redirectTo({
+            url: '/pages/register/register',
+          })
+        }
       },
-      success:function(res){
-        console.log(res.result.event.when)
-      },
-      fail:console.error
+      fail:
+        //console.log('引用数据库错误')
+        wx.showToast({
+          title: '引用数据库错误',
+          //icon:'fail',
+          duration:5000
+        })
+        //return
     })
+
     if(this.data.btnlable !="submited"){
       this.setData({
         inputValue: '',
@@ -67,5 +78,26 @@ Page({
     this.setData({
       btnlable: "submit"
     })
+  },
+
+  submitRecord:function(member,record,when){
+    wx.cloud.callFunction({
+      name: 'submit',
+      data:{
+        code: member.code,
+        name: member.name,
+        points: record,
+        when: when
+      },
+      success:function(res){
+        wx.showToast({
+          title: '积分已提交',
+          icon:'success',
+          duration:2500
+        })
+      },
+      fail:console.error
+    })
   }
+
 })

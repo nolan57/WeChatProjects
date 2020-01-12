@@ -1,0 +1,10 @@
+<!--miniprogram/pages/register.wxml-->
+<view class="container">
+  <form bindsubmit="formSubmit" class="formsection"> 
+    <input bindinput="inputCode" id="memCode" class="inputbox" maxlength="15" auto-focus placeholder="please input your code" ></input>
+    <input bindinput="inputName" id="memName" class="inputbox" maxlength="15" auto-focus placeholder="please input your name" ></input>
+    <input bindinput="inputDepartment" id="memDept" class="inputbox" maxlength="15" auto-focus placeholder="please input your department" ></input>
+    <input bindinput="inputUnit" id="memUnit" class="inputbox" maxlength="15" auto-focus placeholder="please input your unit" ></input>
+    <button plain="false" form-type="submit">Regist</button> 
+  </form>
+</view>
